@@ -47,17 +47,13 @@ static inline std::double_t getCardNum(const std::string &str)
 {
 	if (str == "J") {
 		return 11.0;
-	}
-	else if (str == "Q") {
+	} else if (str == "Q") {
 		return 12.0;
-	}
-	else if (str == "K") {
+	} else if (str == "K") {
 		return 13.0;
-	}
-	else if (str == "A") {
+	} else if (str == "A") {
 		return 1.0;
-	}
-	else {
+	} else {
 		return std::atof(str.c_str());
 	}
 }
@@ -71,14 +67,11 @@ static inline std::double_t calNum(const std::double_t a, const std::double_t b,
 {
 	if (op == '+') {
 		return (a + b);
-	}
-	else if (op == '-') {
+	} else if (op == '-') {
 		return (a - b);
-	}
-	else if (op == '*') {
+	} else if (op == '*') {
 		return (a * b);
-	}
-	else {
+	} else {
 		return (a / b);
 	}
 }
@@ -163,8 +156,7 @@ int main(int argc, char **argv)
 	//}
 	if (hasExp) {
 		std::cout << inputStrArr[0] << std::endl;
-	}
-	else {
+	} else {
 		std::cout << "None" << std::endl;
 	}
 

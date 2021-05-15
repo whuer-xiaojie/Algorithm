@@ -9,7 +9,7 @@
 
 /*
 
-这题是利用余数定理 :如果 x 是这个全为1的数， 那么应当有  x % a ==0 
+这题是利用余数定理 :如果 x 是这个全为1的数， 那么应当有  x % a ==0
 
 即有个b能满足 a * b ==x (全1）,关键是我们的这个x会很大，远远会超过int的表示范围
 
@@ -36,12 +36,9 @@ int findMinAllOne(int a)
 	int ans = 1;
 	int p = 1;
 	while (true) {
-		if (p%a == 0)
-		{
+		if (p%a == 0) {
 			return ans;
-		}
-		else
-		{
+		} else {
 			p = p % a;
 			p = p * 10 + 1;
 			ans++;
