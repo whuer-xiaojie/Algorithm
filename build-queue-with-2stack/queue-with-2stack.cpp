@@ -18,7 +18,7 @@ static void push(int node)
 
 static int pop()
 {
-	if (!stack1.empty()) {
+	if (stack2.empty()) {
 		while (!stack1.empty()) {
 			stack2.push(stack1.top());
 			stack1.pop();
@@ -51,5 +51,16 @@ int main(int argc, char **argv)
 		std::cout << pop() << " ";
 	}
 	std::cout << std::endl;
+
+	push(1);
+	push(2);
+	push(3);
+	std::cout << pop() << std::endl;
+	std::cout << pop() << std::endl;
+	push(4);
+	std::cout << pop() << std::endl;
+	push(5);
+	std::cout << pop() << std::endl;
+	std::cout << pop() << std::endl;
 	return 0;
 }

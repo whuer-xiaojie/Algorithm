@@ -61,13 +61,12 @@ void threadC()
 	}
 }
 
-void threadOut(std::uint8_t a)
+void threadOut(std::uint8_t a, std::uint8_t threadIndex)
 {
-	std::uint8_t index = a - 'A';
 	int count = 0;
 	while (count < 10) {
 		std::unique_lock<std::mutex> myLock(threadMutex);
-		condVar.wait(myLock, [index] { return threadReadFlag == index; });
+		condVar.wait(myLock, [threadIndex] { return threadReadFlag == threadIndex; });
 		std::cout << "thread id= " << std::this_thread::get_id() << " :" << a << std::endl;
 		threadReadFlag = (threadReadFlag + 1) % 3;
 		count++;
@@ -83,9 +82,9 @@ int main(int argc, char **argv)
 	//std::thread th2(threadB);
 	//std::thread th3(threadC);
 
-	std::thread th1(threadOut, 'A');
-	std::thread th2(threadOut, 'B');
-	std::thread th3(threadOut, 'C');
+	std::thread th1(threadOut, 'A', 2);
+	std::thread th2(threadOut, 'B', 1);
+	std::thread th3(threadOut, 'C', 0);
 
 	th1.join();
 	th2.join();
