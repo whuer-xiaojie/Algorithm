@@ -1,13 +1,16 @@
 
 
+/*
+ 实现三个线程同时打印 A B C,每个线程循环10次，要求按照ABCABC...的顺序实现
+*/
 #include <iostream>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
 
-std::mutex threadMutex;
-std::condition_variable condVar;
-std::uint8_t threadReadFlag;
+static std::mutex threadMutex;
+static std::condition_variable condVar;
+static std::uint8_t threadReadFlag;
 
 
 void threadA()
