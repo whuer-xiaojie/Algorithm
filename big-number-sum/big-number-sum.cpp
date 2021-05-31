@@ -70,22 +70,18 @@ string add(string &&a, string &&b)
 		result.append(val);
 	}
 
-	if (aIndex > 0) {
-		while (aIndex >= 0) {
-			const string val = calSum(a[aIndex--], '0', carryFlag);
-			result.append(val);
-		}
+	while (aIndex >= 0) {
+		const string val = calSum(a[aIndex--], '0', carryFlag);
+		result.append(val);
 	}
-
-	if (bIndex > 0) {
-		while (bIndex >= 0) {
-			const string val = calSum('0', b[bIndex--], carryFlag);
-			result.append(val);
-		}
+	
+	while (bIndex >= 0) {
+		const string val = calSum('0', b[bIndex--], carryFlag);
+		result.append(val);
 	}
-
+	
 	if (carryFlag == 1) {
-		result.append(to_string(1 + '0'));
+		result.append(to_string(1));
 	}
 	reverse(result.begin(), result.end());
 	return result;
@@ -145,6 +141,10 @@ void testSameSignSum(void)
 {
 	string a = "123456";
 	string b = "123456";
+	//cout << a << " + " << b << " = " << bigNumSum(a, b) << endl;
+
+	a = "9999";
+	b = "111";
 	cout << a << " + " << b << " = " << bigNumSum(a, b) << endl;
 }
 /***************************************************************************/
