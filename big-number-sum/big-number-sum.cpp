@@ -46,7 +46,6 @@ string getStrAbs(const string &str)
 
 
 /***************************************************************************/
-
 string calSum(const char a, const char b, int &carry)
 {
 	int value = a - '0' + b - '0' + carry;
@@ -66,20 +65,20 @@ string add(string &&a, string &&b)
 	int aIndex = a.length() - 1;
 	int bIndex = b.length() - 1;
 
-	while (aIndex>=0 && bIndex>=0){
+	while (aIndex >= 0 && bIndex >= 0) {
 		const string val = calSum(a[aIndex--], b[bIndex--], carryFlag);
 		result.append(val);
 	}
 
 	if (aIndex > 0) {
-		while (aIndex>=0){
+		while (aIndex >= 0) {
 			const string val = calSum(a[aIndex--], '0', carryFlag);
 			result.append(val);
 		}
 	}
 
 	if (bIndex > 0) {
-		while (bIndex>=0){
+		while (bIndex >= 0) {
 			const string val = calSum('0', b[bIndex--], carryFlag);
 			result.append(val);
 		}
@@ -92,6 +91,7 @@ string add(string &&a, string &&b)
 	return result;
 }
 
+/***************************************************************************/
 const string bigNumSum(const string &lStr, const string &rStr)
 {
 	char lSign = '+';
@@ -114,12 +114,10 @@ const string bigNumSum(const string &lStr, const string &rStr)
 		string result = add(getStrAbs(lStr), getStrAbs(rStr));
 		if (lSign == '-') {
 			return string("-").append(result);
-		}
-		else {
+		} else {
 			return result;
 		}
 	}
-
 
 	return  "";
 }
