@@ -61,7 +61,7 @@ void threadC()
 	}
 }
 
-void threadOut(std::uint8_t a, std::uint8_t threadIndex)
+void threadOut(const std::uint8_t a, const std::uint8_t threadIndex)
 {
 	int count = 0;
 	while (count < 10) {
@@ -82,9 +82,9 @@ int main(int argc, char **argv)
 	//std::thread th2(threadB);
 	//std::thread th3(threadC);
 
-	std::thread th1(threadOut, 'A', 2);
+	std::thread th1(threadOut, 'A', 0);
 	std::thread th2(threadOut, 'B', 1);
-	std::thread th3(threadOut, 'C', 0);
+	std::thread th3(threadOut, 'C', 2);
 
 	th1.join();
 	th2.join();
