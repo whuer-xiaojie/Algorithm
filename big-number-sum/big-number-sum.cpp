@@ -44,7 +44,24 @@ string getStrAbs(const string &str)
 	return isSignedStr(str) ? str.substr(1) : str;
 }
 
-
+//0=>a==b 1=>a>b -1=>a<b 
+int compareAbs(const string &a, const string &b)
+{
+	if (a.length() > b.length()) {
+		return 1;
+	} else if (a.length() < b.length()) {
+		return -1;
+	} else {
+		for (size_t i = 0; i <a.length(); i++) {
+			if (a[i] > b[i]) {
+				return 1;
+			} else if (a[i] < b[i]) {
+				return -1;
+			}
+		}
+	}
+	return 0;
+}
 /***************************************************************************/
 string calSum(const char a, const char b, int &carry)
 {
@@ -58,7 +75,7 @@ string calSum(const char a, const char b, int &carry)
 	return to_string(value);
 }
 
-string add(string &&a, string &&b)
+string add(const string &a, const string &b, const char resultSign)
 {
 	string result = "";
 	int carryFlag = 0;
@@ -84,8 +101,50 @@ string add(string &&a, string &&b)
 		result.append(to_string(1));
 	}
 	reverse(result.begin(), result.end());
-	return result;
+	return resultSign == '+' ? result : string("-").append(result);
 }
+
+/***************************************************************************/
+string calSub(const char a, const char b, int &borrowFlag)
+{
+	if ((a - borrowFlag) >= b) {
+		int val = a - b - borrowFlag;
+		borrowFlag = 0;
+		return to_string(val);
+	} else {
+		int val = a + 10 - b - borrowFlag;
+		borrowFlag = 1;
+		return to_string(val);
+	}
+}
+
+string subtract(const string &a, const string &b, const char resultSign)
+{
+	string result = "";
+	int borrowFlag = 0;
+	int aIndex = a.length() - 1;
+	int bIndex = b.length() - 1;
+	while (aIndex>=0 && bIndex>=0){
+		const string val = calSub(a[aIndex--], b[bIndex--], borrowFlag);
+		result.append(val);
+	}
+
+	while (aIndex >= 0){
+		const string val = calSub(a[aIndex--], '0', borrowFlag);
+		result.append(val);
+	}
+
+	reverse(result.begin(), result.end());
+	size_t index;
+	for (index = 0; index < result.length(); index++) {
+		if (result[index] != '0') {
+			break;
+		}
+	}
+
+	return resultSign == '+' ? result.substr(index) : string("-").append(result.substr(index));
+}
+
 
 /***************************************************************************/
 const string bigNumSum(const string &lStr, const string &rStr)
@@ -106,12 +165,18 @@ const string bigNumSum(const string &lStr, const string &rStr)
 		rSign = rStr[0];
 	}
 
-	if (lSign == rSign) {
-		string result = add(getStrAbs(lStr), getStrAbs(rStr));
-		if (lSign == '-') {
-			return string("-").append(result);
+	const string &&lAbs = getStrAbs(lStr);
+	const string &&rAbs = getStrAbs(rStr);
+	if (lSign == rSign) {//same sign
+		return add(lAbs, rAbs, lSign);
+	} else {//positive && negative 
+		const int cmpResult = compareAbs(lAbs, rAbs);
+		if (cmpResult == 0) {
+			return string("0");
+		} else if(cmpResult == 1){
+			return subtract(lAbs, rAbs, lSign);
 		} else {
-			return result;
+			return subtract(rAbs, lAbs, rSign);
 		}
 	}
 
@@ -141,10 +206,30 @@ void testSameSignSum(void)
 {
 	string a = "123456";
 	string b = "123456";
-	//cout << a << " + " << b << " = " << bigNumSum(a, b) << endl;
+	cout << a << " + " << b << " = " << bigNumSum(a, b) << endl;
 
 	a = "9999";
 	b = "111";
+	cout << a << " + " << b << " = " << bigNumSum(a, b) << endl;
+
+	a = "-9999";
+	b = "-111";
+	cout << a << " + " << b << " = " << bigNumSum(a, b) << endl;
+
+	a = "-9666";
+	b = "999";
+	cout << a << " + " << b << " = " << bigNumSum(a, b) << endl;
+
+	a = "111";
+	b = "-999";
+	cout << a << " + " << b << " = " << bigNumSum(a, b) << endl;
+
+	a = "555";
+	b = "-44444";
+	cout << a << " + " << b << " = " << bigNumSum(a, b) << endl;
+
+	a = "44444";
+	b = "-44440";
 	cout << a << " + " << b << " = " << bigNumSum(a, b) << endl;
 }
 /***************************************************************************/
