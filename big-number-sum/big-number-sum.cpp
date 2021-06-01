@@ -62,6 +62,7 @@ int compareAbs(const string &a, const string &b)
 	}
 	return 0;
 }
+
 /***************************************************************************/
 string calSum(const char a, const char b, int &carry)
 {
@@ -183,6 +184,40 @@ const string bigNumSum(const string &lStr, const string &rStr)
 	return  "";
 }
 
+const string bigNumSubtract(const string &lStr, const string &rStr)
+{
+	char lSign = '+';
+	char rSign = '+';
+	if (!isValidNumberStr(lStr))
+		return rStr;
+
+	if (!isValidNumberStr(rStr))
+		return lStr;
+
+	if (isSignedStr(lStr))
+		lSign = lStr[0];
+
+	if (isSignedStr(rStr))
+		rSign = rStr[0];
+
+	const string &&lAbs = getStrAbs(lStr);
+	const string &&rAbs = getStrAbs(rStr);
+	if (rSign == '-') {
+		return bigNumSum(lStr, rAbs);
+	} else {
+		const int cmpFlag = compareAbs(lAbs, rAbs);
+		if (lSign == '-') {
+			return add(lAbs, rAbs, '-');
+		} 
+		if (cmpFlag == 0) {
+			return "0";
+		} else if(cmpFlag>0){
+			return subtract(lAbs, rAbs, '+');
+		} else {
+			return subtract(rAbs, lAbs, '-');
+		}
+	}
+}
 /***************************************************************************/
 void testIsValidNumberStr(void)
 {
@@ -232,10 +267,44 @@ void testBigNumberSum(void)
 	b = "-44440";
 	cout << a << " + " << b << " = " << bigNumSum(a, b) << endl;
 }
+
+
+void testBigNumSubtract(void)
+{
+	string a = "123456";
+	string b = "123456";
+	cout << a << " - " << b << " = " << bigNumSubtract(a, b) << endl;
+
+	a = "9999";
+	b = "111";
+	cout << a << " - " << b << " = " << bigNumSubtract(a, b) << endl;
+
+	a = "-9999";
+	b = "-111";
+	cout << a << " - " << b << " = " << bigNumSubtract(a, b) << endl;
+
+	a = "-9666";
+	b = "999";
+	cout << a << " - " << b << " = " << bigNumSubtract(a, b) << endl;
+
+	a = "111";
+	b = "-999";
+	cout << a << " - " << b << " = " << bigNumSubtract(a, b) << endl;
+
+	a = "555";
+	b = "44444";
+	cout << a << " - " << b << " = " << bigNumSubtract(a, b) << endl;
+
+	a = "44444";
+	b = "-44440";
+	cout << a << " - " << b << " = " << bigNumSubtract(a, b) << endl;
+}
 /***************************************************************************/
 int main(int argc, char **argv)
 {
 	//testIsValidNumberStr();
 
 	testBigNumberSum();
+
+	testBigNumSubtract();
 }
