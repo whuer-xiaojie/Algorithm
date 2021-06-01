@@ -171,11 +171,11 @@ const string bigNumSum(const string &lStr, const string &rStr)
 		return add(lAbs, rAbs, lSign);
 	} else {//positive && negative 
 		const int cmpResult = compareAbs(lAbs, rAbs);
-		if (cmpResult == 0) {
+		if (cmpResult == 0) {//lAbs==rAbs
 			return string("0");
-		} else if(cmpResult == 1){
+		} else if(cmpResult == 1){//lAbs>rAbs
 			return subtract(lAbs, rAbs, lSign);
-		} else {
+		} else {//lAbs<rAbs
 			return subtract(rAbs, lAbs, rSign);
 		}
 	}
@@ -202,7 +202,7 @@ void testIsValidNumberStr(void)
 	cout << str << " is valid number string: " << isValidNumberStr(str) << endl;
 }
 
-void testSameSignSum(void)
+void testBigNumberSum(void)
 {
 	string a = "123456";
 	string b = "123456";
@@ -237,5 +237,5 @@ int main(int argc, char **argv)
 {
 	//testIsValidNumberStr();
 
-	testSameSignSum();
+	testBigNumberSum();
 }
