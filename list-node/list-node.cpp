@@ -11,10 +11,12 @@ ListNode* reverseNode(ListNode *pHead)
 {
 	if (pHead == nullptr || pHead->next == nullptr)
 		return pHead;
+
 	ListNode *pBefore = nullptr;
 	ListNode *pNow = pHead;
 	ListNode *pAfter = nullptr;
-	while (pNow){
+
+	while (pNow) {
 		pAfter = pNow->next;
 		pNow->next = pBefore;
 		pBefore = pNow;
