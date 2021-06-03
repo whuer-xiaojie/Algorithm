@@ -4,6 +4,11 @@
 #include <algorithm>
 using namespace std;
 
+
+const string bigNumAdd(const string &lStr, const string &rStr);
+const string bigNumSubtract(const string &lStr, const string &rStr);
+const string bigNumMultiply(const string &lStr, const string &rStr);
+const string bigNumDivision(const string &lStr, const string & rStr);
 /***************************************************************************/
 bool isSignedStr(const string &str)
 {
@@ -142,7 +147,7 @@ string subtract(const string &a, const string &b, const char resultSign)
 
 	reverse(result.begin(), result.end());
 	size_t index;
-	for (index = 0; index < result.length(); index++) {
+	for (index = 0; index < result.length() - 1; index++) {
 		if (result[index] != '0') {
 			break;
 		}
@@ -195,6 +200,37 @@ const string multiplyAbs(const string &a, const string &b)
 	return result.substr(index);
 }
 
+/***************************************************************************/
+int calQuotient(string &rem, const string &b)
+{
+	int quo = 0;
+	while (compareAbs(rem, b) >= 0){
+		rem = subtract(rem, b, '+');
+		quo++;
+	}
+	return quo;
+}
+
+const string division(const string &a, const string &b, const char sign)
+{
+	string result = "";
+	string remainder = "0";
+	int quotient = 0;
+	for (size_t i = 0; i < a.length(); i++) {
+		if (remainder == "0") {
+			remainder = string(1, a[i]);
+		} else {
+			remainder.push_back(a[i]);
+		}
+		quotient = calQuotient(remainder, b);
+		if (!result.empty() || quotient != 0) {
+			result.append(to_string(quotient));
+		}
+	}
+
+	cout << a << " % " << b << " = " << remainder << endl;
+	return sign == '+' ? result : string("-").append(result);
+}
 /***************************************************************************/
 const string bigNumAdd(const string &lStr, const string &rStr)
 {
@@ -293,6 +329,40 @@ const string bigNumMultiply(const string &lStr, const string &rStr)
 	return lSign == rSign ? absMultiplyValue : string("-").append(absMultiplyValue);
 }
 
+const string bigNumDivision(const string &lStr, const string & rStr)
+{
+	char lSign = '+';
+	char rSign = '+';
+	if (!isValidNumberStr(lStr))
+		return rStr;
+
+	if (!isValidNumberStr(rStr))
+		return lStr;
+
+	if (isSignedStr(lStr))
+		lSign = lStr[0];
+
+	if (isSignedStr(rStr))
+		rSign = rStr[0];
+
+	const string &&lAbs = getStrAbs(lStr);
+	const string &&rAbs = getStrAbs(rStr);
+
+	if (rAbs == "0")
+		throw exception("Divisor cannot be 0");
+
+	const int cmpFlag = compareAbs(lAbs, rAbs);
+	if (cmpFlag < 0) {
+		return "0";
+	} else {
+		if (lSign == rSign) {
+			return division(lAbs, rAbs, '+');
+		} else {
+			return division(lAbs, rAbs, '-');
+		}
+	}
+}
+
 /***************************************************************************/
 void testIsValidNumberStr(void)
 {
@@ -343,7 +413,6 @@ void testBigNumberAdd(void)
 	cout << a << " + " << b << " = " << bigNumAdd(a, b) << endl;
 }
 
-
 void testBigNumSubtract(void)
 {
 	string a = "123456";
@@ -391,6 +460,25 @@ void testBigNumMultiply(void)
 	b = "-2";
 	cout << a << " * " << b << " = " << bigNumMultiply(a, b) << endl;
 }
+
+void testBigNumDivision(void)
+{
+	string a = "123456";
+	string b = "123456";
+	cout << a << " / " << b << " = " << bigNumDivision(a, b) << endl;
+
+	a = "10";
+	b = "3";
+	cout << a << " / " << b << " = " << bigNumDivision(a, b) << endl;
+
+	a = "-1";
+	b = "3";
+	cout << a << " / " << b << " = " << bigNumDivision(a, b) << endl;
+
+	a = "-100";
+	cout << a << " / " << b << " = " << bigNumDivision(a, b) << endl;
+}
+
 /***************************************************************************/
 int main(int argc, char **argv)
 {
@@ -400,5 +488,7 @@ int main(int argc, char **argv)
 
 	//testBigNumSubtract();
 
-	testBigNumMultiply();
+	//testBigNumMultiply();
+
+	testBigNumDivision();
 }
