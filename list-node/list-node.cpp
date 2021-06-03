@@ -86,8 +86,7 @@ ListNode *mergeTwoNode(ListNode *pL1, ListNode *pL2)
 			pBefore->next = pL1;
 			pBefore = pL1;
 			pL1 = pL1->next;
-		}
-		else {
+		} else {
 			pBefore->next = pL2;
 			pBefore = pL2;
 			pL2 = pL2->next;
