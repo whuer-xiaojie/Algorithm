@@ -45,7 +45,7 @@ void deleteListNode(ListNode *pHead)
 	while (pHead) {
 		ListNode *temp = pHead;
 		pHead = pHead->next;
-		delete pHead;
+		delete temp;
 	}
 }
 
