@@ -99,6 +99,40 @@ ListNode *mergeTwoNode(ListNode *pL1, ListNode *pL2)
 	return pHead;
 }
 
+ListNode *lastKNode(ListNode *pHead, int k)
+{
+	if (pHead == nullptr || k <= 0) {
+		return nullptr;
+	}
+
+	ListNode *pAfter = pHead;
+	ListNode *pBefore = pHead;
+	for (int i = 0; i < k ; i++) {
+		if (pBefore == nullptr) {
+			return nullptr;
+		}
+		pBefore = pBefore->next;
+	}
+	while (pBefore!=nullptr){
+		pBefore = pBefore->next;
+		pAfter = pAfter->next;
+	}
+	return pAfter;
+}
+
+ListNode *deleteDumpNode(ListNode *pHead)
+{
+	if (pHead == nullptr) {
+		return nullptr;
+	}
+	ListNode *pNew = nullptr;
+	ListNode *pBefore = nullptr;
+	ListNode *pNow = pHead;
+	ListNode *pAfter = nullptr;
+	while (pNow != nullptr) {
+
+	}
+}
 /*********************************************/
 
 void testReverseNode(void)
@@ -134,9 +168,32 @@ void testMerge(void)
 
 }
 
+void testLastKNode(void)
+{
+	vector<int> vec = { 2,4,6,8,10,11 };
+	ListNode *p1 = newListNode(vec);
+
+	ListNode *p = lastKNode(p1, 7);
+	if (p != nullptr)
+		cout << p->value << endl;
+	else
+		cout << "invalid last k node" << endl;
+
+	deleteListNode(p1);
+}
+
+void testDeleteDumpNode(void)
+{
+	vector<int> vec = { 2,2,2,4,6,8,10,11 };
+	ListNode *p1 = newListNode(vec);
+	ListNode *p = deleteDumpNode(p1);
+	printListNode(p1, "After delete dump");
+}
 
 int main(int argc, char **argv)
 {
-	testReverseNode();
-	testMerge();
+	//testReverseNode();
+	//testMerge();
+	//testLastKNode();
+	testDeleteDumpNode();
 }
