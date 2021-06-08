@@ -56,21 +56,24 @@ ListNode *reverseKGroup(ListNode *pHead, const int k)
 
 			if (pNew == nullptr) {
 				pNew = reverseNode(pStart);
-			} else {
+			}
+			else {
 				pNewEnd->next = reverseNode(pStart);
 			}
 			pStart = pKEnd = pNextStart;
 			pNewEnd = pLastStart;
 			count = 1;
 			continue;
-		} else {
+		}
+		else {
 			pKEnd = pKEnd->next;
 			count++;
 		}
 	}
 	if (pStart != nullptr && pNew == nullptr) {
 		pNew = pStart;
-	} else {
+	}
+	else {
 		pNewEnd->next = pStart;
 	}
 
@@ -80,11 +83,11 @@ ListNode *reverseKGroup(ListNode *pHead, const int k)
 
 /*
 	题目：输入两个递增排序的链表，合并这两个链表并使新链表中的节点仍然是递增排序的。
-	
+
 	示例1：
 	输入：1->2->4, 1->3->4
 	输出：1->1->2->3->4->4
-	
+
 	限制：
 	0 <= 链表长度 <= 1000
 */
@@ -97,7 +100,8 @@ ListNode *mergeTwoNode(ListNode *pL1, ListNode *pL2)
 			pBefore->next = pL1;
 			pBefore = pL1;
 			pL1 = pL1->next;
-		} else {
+		}
+		else {
 			pBefore->next = pL2;
 			pBefore = pL2;
 			pL2 = pL2->next;
@@ -121,13 +125,13 @@ ListNode *lastKthNode(ListNode *pHead, int k)
 
 	ListNode *pAfter = pHead;
 	ListNode *pBefore = pHead;
-	for (int i = 0; i < k ; i++) {
+	for (int i = 0; i < k; i++) {
 		if (pBefore == nullptr) {
 			return nullptr;
 		}
 		pBefore = pBefore->next;
 	}
-	while (pBefore!=nullptr){
+	while (pBefore != nullptr) {
 		pBefore = pBefore->next;
 		pAfter = pAfter->next;
 	}
@@ -150,7 +154,7 @@ ListNode *deleteAllDumpNode(ListNode *pHead)
 	while (pNow != nullptr) {
 		pAfter = pNow->next;
 		if (pAfter != nullptr && pNow->value == pAfter->value) {
-			while (pAfter != nullptr){
+			while (pAfter != nullptr) {
 				if (pNow->value != pAfter->value) {
 					break;
 				}
@@ -185,12 +189,10 @@ ListNode *deleteDumpNode(ListNode *pHead)
 	}
 	ListNode *pCur = pHead;
 	ListNode *pNext = nullptr;
-	while (pCur!=nullptr)
-	{
+	while (pCur != nullptr) {
 		pNext = pCur->next;
 		if (pNext != nullptr &&pNext->value == pCur->value) {
-			while (pNext!=nullptr)
-			{
+			while (pNext != nullptr){
 				if (pNext->value != pCur->value) {
 					break;
 				}
@@ -217,7 +219,7 @@ void testReverseNode(void)
 	printListNode(pReHead, "After reverse");
 
 	ListNode *p2 = reverseKGroup(pReHead, 2);
-	printListNode(p2,"After 2 group reverse");
+	printListNode(p2, "After 2 group reverse");
 
 	ListNode *p3 = reverseKGroup(p2, 3);
 	printListNode(p3, "After 3 group reverse");
@@ -257,19 +259,19 @@ void testDeleteDumpNode(void)
 {
 	vector<int> vec = { 2,2,2,4,6,8,10,11 };
 	ListNode *p1 = newListNode(vec);
-	ListNode *p =deleteAllDumpNode(p1);
+	ListNode *p = deleteAllDumpNode(p1);
 	printListNode(p, "After delete all dump");
 	deleteListNode(p);
 
 	vector<int> vec2 = { 2,2,2,4,6,6,6,8,10,11,11,11,11 };
 	ListNode *p2 = newListNode(vec2);
-	p= deleteAllDumpNode(p2);
+	p = deleteAllDumpNode(p2);
 	printListNode(p, "After delete all dump");
 	deleteListNode(p);
 
 	vector<int> vec3 = { 2,2,2,4,6,6,6,8,10,11,11,11,11 };
 	ListNode *p3 = newListNode(vec3);
-	p= deleteDumpNode(p3);
+	p = deleteDumpNode(p3);
 	printListNode(p, "After delete dump");
 	deleteListNode(p);
 }
