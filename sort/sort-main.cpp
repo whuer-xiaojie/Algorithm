@@ -13,7 +13,7 @@ void swapNum(int &a, int &b)
 void printVector(const std::vector<int> &a, const std::string &str)
 {
 	std::cout << str << std::endl;
-	for (int i = 0; i < a.size(); i++) {
+	for (size_t i = 0; i < a.size(); i++) {
 		std::cout << " a[" << i << "]=" << a[i];
 	}
 	std::cout << std::endl;
@@ -22,8 +22,8 @@ void printVector(const std::vector<int> &a, const std::string &str)
 
 void bubbleSort(std::vector<int> &a)
 {
-	for (int i = 0; i < a.size() - 1; i++) {
-		for (int j = 0; j < a.size() - 1 - i; j++) {
+	for (size_t i = 0; i < a.size() - 1; i++) {
+		for (size_t j = 0; j < a.size() - 1 - i; j++) {
 			if (a[j] > a[j + 1]) {
 				swapNum(a[j], a[j + 1]);
 			}
@@ -33,7 +33,7 @@ void bubbleSort(std::vector<int> &a)
 
 void insertSort(std::vector<int> &a)
 {
-	for (int i = 1; i < a.size(); i++) {
+	for (size_t i = 1; i < a.size(); i++) {
 		int temp = a[i];
 		int j = i - 1;
 		while (j >= 0 && a[j] > temp) {
@@ -77,7 +77,7 @@ void quickSort(std::vector<int>& a, int left, int right)
 
 int main(int argc, char **argv)
 {
-	std::vector<int> a = { 0,1,2,5,4,3,9,8,6,7 };
+	std::vector<int> arr = { 0,1,2,5,4,3,9,8,6,7 };
 
 	//printVector(a, "Before bubble sort:");
 	//bubbleSort(a);
@@ -87,8 +87,10 @@ int main(int argc, char **argv)
 	//insertSort(a);
 	//printVector(a, "After insert sort");
 
-	printVector(a, "Before quick sort:");
-	quickSort(a, 0, a.size() - 1);
-	printVector(a, "After quick sort");
+	printVector(arr, "Before quick sort:");
+	quickSort(arr, 0, arr.size() - 1);
+	printVector(arr, "After quick sort");
+
 	return 0;
 }
+
