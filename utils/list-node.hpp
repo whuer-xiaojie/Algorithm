@@ -11,7 +11,7 @@ typedef struct ListNode {
 	int value;
 	struct ListNode *next;
 	ListNode(int x) :value(x), next(nullptr) {}
-	ListNode() { next = nullptr; }
+	~ListNode() { next = nullptr; }
 } ListNode;
 
 void printListNode(ListNode *pHead, const string &msg)
