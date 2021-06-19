@@ -148,7 +148,7 @@ bool isMirrorTree(TreeNode* root1, TreeNode* root2)
 /*
 	操作给定的二叉树，将其变换为源二叉树的镜像。
 	如下两棵树为镜像二叉树：
-		8                   8
+        8                   8
 	   / \                 / \
 	  6   10              10  6
 	 / \  / \            / \  / \
@@ -221,6 +221,37 @@ vector<vector<int>> findAllSumKPath(TreeNode *root, const int k)
 	}
 	return result;
 }
+
+/*********************************************/
+bool isBalancedTree(TreeNode *root)
+{
+	if (root == nullptr)
+		return true;
+	int leftDepth = getTreeDepth(root->left);
+	int rightDepth = getTreeDepth(root->right);
+	int diff = leftDepth - rightDepth;
+	if (diff > 1 || diff < -1)
+		return false;
+	return isBalancedTree(root->left) && isBalancedTree(root->right);
+}
+
+bool isBalancedTree(TreeNode *root, int &depth)
+{
+	if (root == nullptr) {
+		depth = 0;
+		return true;
+	}
+	int leftDepth, rightDepth;
+	if (isBalancedTree(root->left, leftDepth) && isBalancedTree(root->right, rightDepth)) {
+		int diff = leftDepth - rightDepth;
+		if (diff <= 1 && diff >= -1) {
+			depth = 1 + (leftDepth > rightDepth ? leftDepth : rightDepth);
+			return true;
+		}
+	}
+	return false;
+}
+
 /*********************************************/
 void testTreeOrder(void)
 {
