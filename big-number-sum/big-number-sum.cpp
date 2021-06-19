@@ -62,7 +62,7 @@ int compareAbs(const string &a, const string &b)
 	} else if (a.length() < b.length()) {
 		return -1;
 	} else {
-		for (size_t i = 0; i <a.length(); i++) {
+		for (size_t i = 0; i < a.length(); i++) {
 			if (a[i] > b[i]) {
 				return 1;
 			} else if (a[i] < b[i]) {
@@ -102,12 +102,12 @@ string add(const string &a, const string &b, const char resultSign)
 		const string val = calSum(a[aIndex--], '0', carryFlag);
 		result.append(val);
 	}
-	
+
 	while (bIndex >= 0) {
 		const string val = calSum('0', b[bIndex--], carryFlag);
 		result.append(val);
 	}
-	
+
 	if (carryFlag == 1) {
 		result.append(to_string(1));
 	}
@@ -135,12 +135,12 @@ string subtract(const string &a, const string &b, const char resultSign)
 	int borrowFlag = 0;
 	int aIndex = a.length() - 1;
 	int bIndex = b.length() - 1;
-	while (aIndex>=0 && bIndex>=0){
+	while (aIndex >= 0 && bIndex >= 0) {
 		const string val = calSub(a[aIndex--], b[bIndex--], borrowFlag);
 		result.append(val);
 	}
 
-	while (aIndex >= 0){
+	while (aIndex >= 0) {
 		const string val = calSub(a[aIndex--], '0', borrowFlag);
 		result.append(val);
 	}
@@ -204,7 +204,7 @@ const string multiplyAbs(const string &a, const string &b)
 int calQuotient(string &rem, const string &b)
 {
 	int quo = 0;
-	while (compareAbs(rem, b) >= 0){
+	while (compareAbs(rem, b) >= 0) {
 		rem = subtract(rem, b, '+');
 		quo++;
 	}
@@ -258,7 +258,7 @@ const string bigNumAdd(const string &lStr, const string &rStr)
 		const int cmpResult = compareAbs(lAbs, rAbs);
 		if (cmpResult == 0) {//lAbs==rAbs
 			return string("0");
-		} else if(cmpResult == 1){//lAbs>rAbs
+		} else if (cmpResult == 1) {//lAbs>rAbs
 			return subtract(lAbs, rAbs, lSign);
 		} else {//lAbs<rAbs
 			return subtract(rAbs, lAbs, rSign);
@@ -292,10 +292,10 @@ const string bigNumSubtract(const string &lStr, const string &rStr)
 		const int cmpFlag = compareAbs(lAbs, rAbs);
 		if (lSign == '-') {
 			return add(lAbs, rAbs, '-');
-		} 
+		}
 		if (cmpFlag == 0) {
 			return "0";
-		} else if(cmpFlag>0){
+		} else if (cmpFlag > 0) {
 			return subtract(lAbs, rAbs, '+');
 		} else {
 			return subtract(rAbs, lAbs, '-');
@@ -321,11 +321,11 @@ const string bigNumMultiply(const string &lStr, const string &rStr)
 
 	const string &&lAbs = getStrAbs(lStr);
 	const string &&rAbs = getStrAbs(rStr);
-	if (lAbs == "0" || rAbs == "0") 
+	if (lAbs == "0" || rAbs == "0")
 		return "0";
-	
+
 	const string &&absMultiplyValue = multiplyAbs(lAbs, rAbs);
-	
+
 	return lSign == rSign ? absMultiplyValue : string("-").append(absMultiplyValue);
 }
 
@@ -448,7 +448,7 @@ void testBigNumMultiply(void)
 {
 	string a = "123456";
 	string b = "123456";
-	cout << a << " * " << b << " = " << bigNumMultiply(a,b) << endl;
+	cout << a << " * " << b << " = " << bigNumMultiply(a, b) << endl;
 
 	a = "0";
 	cout << a << " * " << b << " = " << bigNumMultiply(a, b) << endl;

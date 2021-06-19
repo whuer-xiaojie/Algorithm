@@ -7,10 +7,11 @@
 
 using namespace std;
 
-typedef struct ListNode {
+typedef struct ListNode
+{
 	int value;
 	struct ListNode *next;
-	ListNode(int x) :value(x), next(nullptr) {}
+	ListNode(int x) :value(x), next(nullptr) { }
 	~ListNode() { next = nullptr; }
 } ListNode;
 

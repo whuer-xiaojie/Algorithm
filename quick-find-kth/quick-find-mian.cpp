@@ -37,24 +37,22 @@ void printVec(const vector<int> &a, int index)
 {
 	const int temp = a[index];
 	cout << "before " << index << endl;
-	for (int i = 0; i < a.size() && i<=index; i++) {
+	for (int i = 0; i < a.size() && i <= index; i++) {
 		cout << " a[" << i << "]= ";
 		if (temp >= a[i]) {
-			cout<< a[i];
-		}
-		else {
+			cout << a[i];
+		} else {
 			cout << "error";
 		}
 	}
 	cout << endl;
 
 	cout << "after " << index << endl;
-	for (int i = index+1; i < a.size(); i++) {
+	for (int i = index + 1; i < a.size(); i++) {
 		cout << " a[" << i << "]= ";
 		if (temp <= a[i]) {
 			cout << a[i];
-		}
-		else {
+		} else {
 			cout << "error";
 		}
 	}
@@ -63,7 +61,7 @@ void printVec(const vector<int> &a, int index)
 
 int quickFind(vector<int> &a, int left, int right, int k)
 {
-	
+
 	if (left == right) {
 		return -1;
 	}
@@ -74,7 +72,7 @@ int quickFind(vector<int> &a, int left, int right, int k)
 	cout << "left= " << left << " right= " << right << endl;
 	if (index == (k - 1))
 		return a[index];
-	else if (index < k-1)
+	else if (index < k - 1)
 		return quickFind(a, index + 1, right, k);
 	else
 		return quickFind(a, left, index - 1, k);
@@ -82,7 +80,7 @@ int quickFind(vector<int> &a, int left, int right, int k)
 	//quickFind(a, left, index - 1, k);
 }
 
-int findKth(vector<int> &a, int n, int K) 
+int findKth(vector<int> &a, int n, int K)
 {
 	// write code here
 	return quickFind(a, 0, n - 1, K);
@@ -90,7 +88,7 @@ int findKth(vector<int> &a, int n, int K)
 
 int main(int argc, char** argv)
 {
-	vector<int> a = { 
+	vector<int> a = {
 		1332802,1177178,1514891,871248,753214,123866,1615405,328656,1540395,968891,
 		1884022,252932,1034406,1455178,821713,486232,860175,1896237,852300,566715,
 		1285209,1845742,883142,259266,520911,1844960,218188,1528217,332380,261485,

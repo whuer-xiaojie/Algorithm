@@ -87,7 +87,7 @@ void merge(std::vector<int>& arr, int l1, int r1, int l2, int r2)
 	int i = l1;
 	int j = l2;
 	std::vector<int> temp;
-	while (i <= r1 && j <= r2){
+	while (i <= r1 && j <= r2) {
 		if (arr[i] < arr[j]) {
 			temp.push_back(arr[i++]);
 		} else {
@@ -95,11 +95,11 @@ void merge(std::vector<int>& arr, int l1, int r1, int l2, int r2)
 		}
 	}
 
-	while (i <= r1){
+	while (i <= r1) {
 		temp.push_back(arr[i++]);
 	}
 
-	while (j <= r2){
+	while (j <= r2) {
 		temp.push_back(arr[j++]);
 	}
 

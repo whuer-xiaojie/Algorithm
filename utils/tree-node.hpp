@@ -7,15 +7,17 @@
 
 using namespace std;
 
-typedef struct TreeNode {
+typedef struct TreeNode
+{
 	int value;
 	struct TreeNode *left;
 	struct TreeNode *right;
-	TreeNode(int x) :value(x), left(nullptr), right(nullptr) {}
+	TreeNode(int x) :value(x), left(nullptr), right(nullptr) { }
 	~TreeNode() { left = nullptr; right = nullptr; }
-} TreeNode;
+}TreeNode;
 
-typedef enum ETraversalOrder {
+typedef enum ETraversalOrder
+{
 	PRE_ORDER,
 	MID_ORDER,
 	POST_ORDER
@@ -74,4 +76,10 @@ void deleteTreeNode(TreeNode *root)
 	delete root;
 	root = nullptr;
 }
+
+bool isLeafNode(TreeNode *pNode)
+{
+	return (pNode->left == nullptr && pNode->right == nullptr);
+}
+
 #endif // !TREE_NODE_H

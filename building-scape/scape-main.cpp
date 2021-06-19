@@ -45,7 +45,7 @@ static std::int32_t find(const std::int32_t *arr, const std::int32_t len)
 
 int main(int argc, char**argv)
 {
-	std::int32_t N; 
+	std::int32_t N;
 	std::cin >> N;
 	std::int32_t *inputArr = new std::int32_t[N];
 	for (int i = 0; i < N; i++) {
