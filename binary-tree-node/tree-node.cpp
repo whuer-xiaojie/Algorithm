@@ -152,7 +152,7 @@ bool isMirrorTree(TreeNode* root1, TreeNode* root2)
 	   / \                 / \
 	  6   10              10  6
 	 / \  / \            / \  / \
-	5   7 9  11         11  9 7  5
+	5   7 3  11         11  3 7  5
 */
 TreeNode* newMirrorTree(TreeNode* root)
 {
@@ -187,6 +187,39 @@ vector<int> printTreeFromTop2Bottom(TreeNode *root)
 		queTree.pop();
 	}
 	return vec;
+}
+
+/*********************************************/
+void findKPath(TreeNode *root, const int k, vector<int> &pathVec, vector<vector<int>> &resultVec)
+{
+	if (root == nullptr)
+		return;
+
+	pathVec.emplace_back(root->value);
+	if (isLeafNode(root) && (k - root->value) == 0) {
+		resultVec.emplace_back(pathVec);
+	}
+	findKPath(root->left, k - root->value, pathVec, resultVec);
+	findKPath(root->right, k - root->value, pathVec, resultVec);
+	pathVec.pop_back();
+}
+/*
+	输入一颗二叉树和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。
+	路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径
+*/
+vector<vector<int>> findAllSumKPath(TreeNode *root, const int k)
+{
+	vector<vector<int>> result;
+	vector<int> pathVec;
+	findKPath(root, k, pathVec, result);
+	cout << "tree all sum = " << k << " path: " << endl;
+	for (int i = 0; i < result.size(); i++) {
+		for (int j = 0; j < result[i].size(); j++) {
+			cout << " " << result[i][j];
+		}
+		cout << endl;
+	}
+	return result;
 }
 /*********************************************/
 void testTreeOrder(void)
@@ -258,12 +291,24 @@ void testPrintFromTop2Bottom(void)
 
 	deleteTreeNode(root);
 }
+
+void testSumKPath(void)
+{
+	const vector<int> preOrder = { 8,6,5,7,10,3,11 };
+	const vector<int> midOrder = { 5,6,7,8,3,10,11 };
+	TreeNode* root = reconstructTree(preOrder, midOrder);
+
+	auto result = findAllSumKPath(root, 21);
+
+	deleteTreeNode(root);
+}
 /*********************************************/
 int main(int argc, char** argv)
 {
 	//testTreeOrder();
 	//testReconstructTree();
 	//testMirrorTree();
-	testPrintFromTop2Bottom();
+	//testPrintFromTop2Bottom();
+	testSumKPath();
 	return 0;
 }
