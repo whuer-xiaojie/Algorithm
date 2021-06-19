@@ -16,6 +16,9 @@ int getValueIndex(const vector<int>& vec, const int value)
 }
 
 /*********************************************/
+/*
+	根据 前序遍历 && 中序遍历 重构二叉树（二叉树不包含重复元素）
+*/
 TreeNode* reconstructTree(const vector<int>& preOrderArr, const vector<int>& midOrderArr)
 {
 	if (preOrderArr.empty()) {
@@ -40,6 +43,9 @@ TreeNode* reconstructTree(const vector<int>& preOrderArr, const vector<int>& mid
 	root->right = reconstructTree(rightPreArr, rightMidArr);
 	return root;
 }
+/*
+	根据 前序遍历 && 中序遍历 重构二叉树（二叉树不包含重复元素）
+*/
 
 TreeNode* reconstructTree(const vector<int>& preOrderArr, const int preStart, const int preEnd,
 	const vector<int>& midOrderArr, const int midStart, const int midEnd)
@@ -68,6 +74,9 @@ bool doesTree1HasTree2(TreeNode* root1, TreeNode* root2)
 	return doesTree1HasTree2(root1->left, root2->left) && doesTree1HasTree2(root1->right, root2->right);
 }
 
+/*
+	输入两颗二叉树A，B，判断B是不是A的子结构。（PS：我们约定空树不是任意一个树的子结构）
+*/
 bool hasSubTree(TreeNode* root1, TreeNode* root2)
 {
 	bool hasSub = false;
@@ -84,6 +93,9 @@ bool hasSubTree(TreeNode* root1, TreeNode* root2)
 }
 
 /*********************************************/
+/*
+	输入一棵二叉树，求该树的深度。从根结点到叶结点依次经过的结点（含根、叶结点）形成树的一条路径，最长路径的长度为树的深度。
+*/
 int getTreeDepth(TreeNode* root)
 {
 	if (root == nullptr)
@@ -128,6 +140,15 @@ bool isMirrorTree(TreeNode* root1, TreeNode* root2)
 	return true;
 }
 
+/*
+	操作给定的二叉树，将其变换为源二叉树的镜像。
+	如下两棵树为镜像二叉树：
+		8                   8
+	   / \                 / \
+	  6   10              10  6
+	 / \  / \            / \  / \
+	5   7 9  11         11  9 7  5
+*/
 TreeNode* newMirrorTree(TreeNode* root)
 {
 	if (root == nullptr)
