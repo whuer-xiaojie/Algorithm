@@ -2,6 +2,11 @@
 #include "../utils/tree-node.hpp"
 #include <iostream>
 #include <vector>
+#include <queue>
+#include <string>
+
+
+using namespace std;
 
 int getValueIndex(const vector<int>& vec, const int value)
 {
@@ -158,6 +163,31 @@ TreeNode* newMirrorTree(TreeNode* root)
 	r->right = newMirrorTree(root->left);
 	return r;
 }
+
+/*********************************************/
+/*
+	从上往下打印出二叉树的每个节点，同层节点从左至右打印
+*/
+vector<int> printTreeFromTop2Bottom(TreeNode *root)
+{
+	vector<int> vec;
+	if (root == nullptr)
+		return vec;
+	queue<TreeNode *> queTree;
+	queTree.push(root);
+	while (!queTree.empty()) {
+		TreeNode *pTemp = queTree.front();
+		vec.emplace_back(pTemp->value);
+		if (pTemp->left != nullptr) {
+			queTree.push(pTemp->left);
+		}
+		if (pTemp->right != nullptr) {
+			queTree.push(pTemp->right);
+		}
+		queTree.pop();
+	}
+	return vec;
+}
 /*********************************************/
 void testTreeOrder(void)
 {
@@ -211,11 +241,29 @@ void testMirrorTree(void)
 	deleteTreeNode(root);
 	deleteTreeNode(mirrorRoot);
 }
+
+void testPrintFromTop2Bottom(void)
+{
+	const vector<int> preOrder = { 8,6,5,7,10,9,11 };
+	const vector<int> midOrder = { 5,6,7,8,9,10,11 };
+	TreeNode* root = reconstructTree(preOrder, midOrder);
+
+	vector<int> &&vec = printTreeFromTop2Bottom(root);
+
+	cout << "print tree form top to bottom result:";
+	for (int i = 0; i < vec.size(); i++) {
+		cout << " " << vec[i];
+	}
+	cout << endl;
+
+	deleteTreeNode(root);
+}
 /*********************************************/
 int main(int argc, char** argv)
 {
 	//testTreeOrder();
 	//testReconstructTree();
-	testMirrorTree();
+	//testMirrorTree();
+	testPrintFromTop2Bottom();
 	return 0;
 }
