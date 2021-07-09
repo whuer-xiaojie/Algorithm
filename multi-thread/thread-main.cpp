@@ -75,6 +75,10 @@ void threadOut(const std::uint8_t a, const std::uint8_t threadIndex)
 	}
 }
 
+std::function<bool()> cmp(int a, int b)
+{
+	return [&a, &b]() { return a > b; };
+}
 
 int main(int argc, char **argv)
 {
@@ -89,6 +93,8 @@ int main(int argc, char **argv)
 	th1.join();
 	th2.join();
 	th3.join();
+
+	std::cout << cmp(1, 2)() << std::endl;
 
 	return 0;
 }
