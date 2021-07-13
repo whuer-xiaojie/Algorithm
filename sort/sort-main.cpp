@@ -82,7 +82,7 @@ void quickSort(std::vector<int>& a, int left, int right)
 	quickSort(a, index + 1, right);
 }
 
-/*********************************************/
+
 void merge(std::vector<int>& arr, int l1, int r1, int l2, int r2)
 {
 	int i = l1;
@@ -144,6 +144,7 @@ void max_heapify(int arr[], int start, int end)
 		}
 	}
 }
+
 void heap_sort(int arr[], int len)
 {
 	int i;
@@ -154,6 +155,58 @@ void heap_sort(int arr[], int len)
 	for (i = len - 1; i > 0; i--) {
 		swapNum(arr[0], arr[i]);
 		max_heapify(arr, 0, i - 1);
+	}
+}
+
+
+/*********************************************/
+inline int parentIndex(const int i)
+{
+	return (i - 1) / 2;
+}
+inline int leftIndex(const int i)
+{
+	return 2 * i + 1;
+}
+
+inline int rightIndex(const int i)
+{
+	return 2 * i + 2;
+}
+
+void max_heapify(std::vector<int>&arr, const int i, const int heapSize)
+{
+	const int lIndex = leftIndex(i);
+	const int rIndex = rightIndex(i);
+	int maxIndex = i;
+	if (lIndex < heapSize && arr[i] < arr[lIndex]) {
+		maxIndex = lIndex;
+	}
+	if (rIndex < heapSize && arr[maxIndex] < arr[rIndex]) {
+		maxIndex = rIndex;
+	}
+
+	if (maxIndex != i) {
+		swapNum(arr[i], arr[maxIndex]);
+		max_heapify(arr, maxIndex, heapSize);
+	}
+}
+
+void build_max_heap(std::vector<int>&arr)
+{
+	int heapSize = arr.size();
+	for (int i = (heapSize - 1) / 2; i >= 0; i--) {
+		max_heapify(arr, i, heapSize);
+	}
+}
+
+void heap_sort(std::vector<int>&arr)
+{
+	build_max_heap(arr);
+	int heapSize = arr.size();
+	for (int i = arr.size() - 1; i > 0; i--) {
+		swapNum(arr[0], arr[i]);
+		max_heapify(arr, 0, --heapSize);
 	}
 }
 /*********************************************/
@@ -177,10 +230,13 @@ int main(int argc, char **argv)
 	//mergeSort(arr, 0, arr.size() - 1);
 	//printVector(arr, "After quick sort");
 
-	printVector(arr, "Before heap sort:");
-	heapSort(arr);
-	printVector(arr, "After heap sort");
+	//printVector(arr, "Before heap sort:");
+	//heapSort(arr);
+	//printVector(arr, "After heap sort");
 
+	printVector(arr, "Before heap sort:");
+	heap_sort(arr);
+	printVector(arr, "After heap sort");
 	return 0;
 }
 
