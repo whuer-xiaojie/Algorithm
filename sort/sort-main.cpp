@@ -209,10 +209,87 @@ void heap_sort(std::vector<int>&arr)
 		max_heapify(arr, 0, --heapSize);
 	}
 }
+
+/*********************************************/
+std::vector<int> count_sort(const std::vector<int> &arr, const int maxNumOfArr)
+{
+	std::vector<int> countArr(maxNumOfArr + 1, 0);
+	std::vector<int> resArr(arr.size(), 0);
+
+	for (int i = 0; i < arr.size(); i++) {
+		countArr[arr[i]]++;
+	}
+
+	for (int i = 1; i < countArr.size(); i++) {
+		countArr[i] += countArr[i - 1];
+	}
+
+	for (int i = arr.size() - 1; i >= 0; i--) {
+		resArr[countArr[arr[i]] - 1] = arr[i];
+		countArr[arr[i]]--;
+	}
+	return resArr;
+}
+
+/*********************************************/
+int getArrayMaxBit(const std::vector<int> &arr)
+{
+	int maxNum = 0;
+	int bits = 1;
+	for (int i = 0; i < arr.size(); i++) {
+		if (arr[i] > maxNum) {
+			maxNum = arr[i];
+		}
+	}
+	while (maxNum >= 10) {
+		maxNum /= 10;
+		bits++;
+	}
+	return bits;
+}
+
+void radix_sort(std::vector<int> &arr)
+{
+	int bits = getArrayMaxBit(arr);
+	std::vector<int> tempArr(arr);
+	int radix = 1;
+
+	for (int i = 0; i < bits; i++) {
+		std::vector<int> countArr(10, 0);
+		for (int j = 0; j < arr.size(); j++) {
+			int k = (arr[j] / radix) % 10;
+			countArr[k]++;
+		}
+
+		for (int j = 1; j < countArr.size(); j++) {
+			countArr[j] += countArr[j - 1];
+		}
+
+		for (int j = arr.size() - 1; j >= 0; j--) {
+			int k = (arr[j] / radix) % 10;
+			tempArr[countArr[k] - 1] = arr[j];
+			countArr[k]--;
+		}
+
+		for (int j = 0; j < tempArr.size(); j++) {
+			arr[j] = tempArr[j];
+		}
+
+		radix *= 10;
+	}
+}
+/*********************************************/
+void test_radix_sort(void)
+{
+	std::vector<int> arr = { 0,123,11,134,256,54,425,0,34,956,843,623,72 };
+	printVector(arr, "Before radix sort:");
+	radix_sort(arr);
+	printVector(arr, "After radix sort");
+}
 /*********************************************/
 int main(int argc, char **argv)
 {
-	std::vector<int> arr = { 0,1,1,2,5,4,3,9,8,6,7 };
+	std::vector<int> arr = { 0,1,1,1,2,5,4,0,3,9,8,6,7 };
 
 	//printVector(arr, "Before bubble sort:");
 	//bubbleSort(arr);
@@ -234,9 +311,15 @@ int main(int argc, char **argv)
 	//heapSort(arr);
 	//printVector(arr, "After heap sort");
 
-	printVector(arr, "Before heap sort:");
-	heap_sort(arr);
-	printVector(arr, "After heap sort");
+	//printVector(arr, "Before heap sort:");
+	//heap_sort(arr);
+	//printVector(arr, "After heap sort");
+
+	printVector(arr, "Before count sort:");
+	auto res = count_sort(arr, 9);
+	printVector(res, "After count sort");
+
+	test_radix_sort();
 	return 0;
 }
 
